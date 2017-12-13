@@ -1,50 +1,377 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+	<title>Git 101</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/league.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+            <section data-markdown>
+                # Git 101
+            </section>
+            <section data-markdown>
+                ## What is Version Control?
+
+                * It provides a place to store your source code
+                * It provides a historical record of what you have done over time
+                    * This enables you to go back to previous versions in case of bugs, as well as investigating when and how bugs occurred
+                * It *can* provide a way for developers to work on separate tasks in parallel, merging their efforts later
+                * It *can* provide a way for developers to work together without getting in each others' way
+            </section>
+            <section data-markdown>
+                ## Version Control
+
+                There are two main types of Verison Control Systems:
+
+                * Centralized Version Control
+                * Distributed Version Control
+            </section>
+            <section>
+                <section data-markdown>
+                    ## Centralized Version Control (CVCS)
+
+                    #### Client-Server
+
+                    * "Classic" Version Control
+                    * Single central copy of project
+                    * You pull the files you need, rather than the entire project
+                    * Examples:
+                        * Subversion (SVN)
+                        * CVS
+                        * Microsoft Team Foundation Server (legacy)
+                        * SourceGear Vault
+                </section>
+                <section data-markdown>
+                    ## Workflow
+
+                    ![Workflow](media/cvcs-workflow.png)
+                </section>
+                <section data-markdown>
+                    ## Benefits
+
+                    * Easy setup
+                    * Clear view for developers
+                    * Easy administrator control of the workflow
+                </section>
+                <section data-markdown>
+                    ## Disadvantages
+
+                    * Single point of failure
+                    * Remote commits are slow
+                    * Incorrect change can stop everyone else's work
+                </section>
+            </section>
+            <section>
+                <section data-markdown>
+                    ## Distributed Version Control (DVCS)
+
+                    #### Distributed
+
+                    * Each user clones a local copy of the repository.
+                    * Full copy of the project, including history.
+                    * Server still acts as the primary copy.
+                    * Examples:
+                        * Git
+                        * Mercurial
+                </section>
+                <section data-markdown>
+                    ## Workflow
+
+                    ![Workflow](media/dvcs-workflow.png)
+                </section>
+                <section data-markdown>
+                    ## Benefits
+
+                    * Commits, reverts, etc. are done locally
+                        * This also means you can work without internet, except when pushing changes
+                    * No single point of failure
+                    * Everyone has a full copy of the project's history
+                        * Harder for one person to stop everyone else's work
+                    * Partial changes can be pushed continuous
+                        * Less chance of losing work
+                    * Easier for remote development
+                    * Easier non-linear (parallel) development
+                </section>
+                <section data-markdown>
+                    ## Disadvantages
+
+                    * More difficult to setup (if you do it yourself)
+                    * More complicated to learn
+                    * Binary files don't allow diffs and take up a lot of storage
+                </section>
+            </section>
+			<section data-markdown>
+                ## So What's Git?
+
+                Git is a version control system developed in 2005 by the Linux kernal team. It was designed to address many of the problems that existed with both centralized and (at the time, rudimentary) distributed version control systems. It has since become the defacto standard for version control in the software industry.
+
+                * It's fast
+                * It's efficient with large projects
+                * It's branching system is great for non-linear development
+            </section>
+            <section>
+                <section data-markdown>
+                    ## Git Basics
+
+                    ![Easy Git](media/easy-git.jpg)
+                </section>
+                <section data-markdown>
+                        Understanding Git is the toughest obstacle to adopting it. Compared to CVCS, it's complicated. It's also not particularly intuitive at first, as it doesn't match how most people think about version control and history. However, if you understand the concepts involved, it becomes much easier to learn and work with on a daily basis.
+                </section>
+                <section data-markdown>
+                    ## Snapshots, Not Differences
+
+                    Git is closer to a file system than a standard version control system.
+                </section>
+                <section data-markdown>
+                    Most VCS store information as a list of file-based changes.
+
+                    ![Differences](media/differences.png)
+
+                    They conceptualize information as a set of files and the changes made to each file over time.
+                </section>
+                <section data-markdown>
+                    Git, on the other hand, stores the state of the entire project, ommitting any data that hasn't changed.
+
+                    ![Snapshots](media/snapshots.png)
+
+                    Every time you commit (save the project's state in Git), it takes a "picture" of what every file looks like and stores a reference to that snapshot. When it does this, it ignores any files that haven't changed. It doesn't store a new copy of the file, just a link to the previous identical file.
+                </section>
+                <section data-markdown>
+                    ## Local Operations
+
+                    Unlike with a CVCS, nearly every operation in Git is done locally. The entire repository exists on the developer's computer, including the repository's history. Commits (changes) are made locally. Reversions happen locally. Merging (or Rebasing) commits happens locally. Then those changes are pushed to a server where other developers have access. This makes Git operations quicker than many other Version Control Systems, and it gives developers the ability to work even when they are offline or in remote locations.
+                </section>
+                <section data-markdown>
+                    ## Additional Integrity
+
+                    * Git checksums every change when committed
+                        * This prevents data loss duruing transit or due to file corruption
+                    * Git only adds data to the Git database
+                        * This means that once something has been committed, you can always revert back to it later
+                    * You have to try really, really hard to screw up a Git repository
+                </section>
+                <section data-markdown>
+                    ## Three States
+
+                    There are three main states for local changes:
+
+                    * Modified
+                    * Staged
+                    * Committed
+                </section>
+                <section data-markdown>
+                    ## Git Project Sections
+
+                    * Working Directory
+                    * Index (Staging Area)
+                    * Git Directory (Repository/HEAD)
+
+
+                    ![Local Operations](media/local-operations.png)
+                </section>
+                <section data-markdown>
+                    ## Local Workflow
+
+                    * You Modify files in your Working Directory
+                    * You Stage files, adding snapshops of the files to your Index
+                    * You Commit changes, which moves them from the Index and stores that snapshot in your Git Directory
+                </section>
+                <section data-markdown>
+                    ## Origin
+
+                    Even though Git is inherently distributed, most Git implementations do utilize a central server that serves as the "authoritative" copy of the repository. This server is often referred to as __origin__, because it is where the repository is checked out from.
+
+                    When Commits are pushed, they are being pushed to __origin__.
+                </section>
+            </section>
+            <section>
+                <section data-markdown>
+                    ## Git Good
+
+                    ![Branches](media/git-branches.png)
+                </section>
+                <section data-markdown>
+                    ## Branches
+
+                    If you think of your repository as a tree, the main progression set of your code is the trunk. Development, however, is done on branches.
+
+                    Most projects will have a __master__ branch and a __beta__ branch (the names may vary). The __master__ branch should always be production-ready. The __beta__ branch is where most development happens.
+
+                    Large-scale changes, particularly entirely new modules of a codebase, are often written on what are called __feature branches__.
+                </section>
+                <section data-markdown>
+                    ## Merging
+
+                    #### Fast-forward
+
+                    If the branch that is being merged is a descendent of the branch that it is being merged into, a fast-forward is done. This simply means that the new snapshot replaces the old snapshot, since the new snapshot __contains__ the old snapshot in its history.
+
+                    #### Three-way Merge
+
+                    If the branch that is being merged has diverged from the branch it is being merged into, Git finds the best common ancestor of both branches and then uses that as a basis of comparison for the two branches being merged. This is done automatically.
+                </section>
+                <section data-markdown>
+                    ## Merge Conflicts
+
+                    Occasionally you'll run into Conflicts. A conflict simply means that the two branches both changed the same part of a file in different ways. If Git can't merge them together cleanly, it will prompt you to compare the two files and choose which sections should be kept and which should be discarded.
+
+                    Once all Conflicts have been Resolved, you can finalize this new Merge Commit which will reflect the changes you specified.
+                </section>
+                <section data-markdown>
+                    ## Rebasing
+
+                    Rebasing serves the same purpose as merging, but functions differently.
+
+                    Rebasing works by taking the commits on one branch and replaying them on top of another branch, creating a new snapshot on the target branch.
+
+                    This has the benefit of ensuring that the new commit is clean before pushing the change to __origin__. It also creates a linear history of all changes, even if the work was originally done on parallel branches.
+
+                    If all goes well, the end result (the final snapshot) of a merge and a rebase would be identical. It's just the project's history that is different, as Rebasing provides a cleaner history.
+                </section>
+                <section data-markdown>
+                    ## Rebasing vs. Merging
+
+                    Rebasing and Merging both have their place.
+
+                    Merging creates a more accurate reflection of the project's history. It can also help prevent problems when very large teams are working on the same project.
+
+                    Rebasing creates a history that is easier to read, and it requires less work from project maintainers. You'll also run into fewer conflicts with rebasing.
+
+                    ___Never Rebase a commit that has already been pushed.___
+                </section>
+                <section data-markdown>
+                    ## Example Git History
+
+                    The following is an example of a Git project's history to visualize branches.
+                </section>
+                <section data-markdown>
+                    ## Master and Beta Branches
+
+                    ![Test](media/workflow1.svg)
+                </section>
+                <section data-markdown>
+                    ## Feature Branches
+
+                    ![Test](media/workflow2.svg)
+                </section>
+                <section data-markdown>
+                    ## Release Branches
+
+                    ![Test](media/workflow3.svg)
+
+                    *Note: We use Tags for this.*
+                </section>
+                <section data-markdown>
+                    ## Hotfixes Branches
+
+                    ![Test](media/workflow4.svg)
+
+                    *Note: We use Tags for this.*
+                </section>
+            </section>
+            <section>
+                <section data-markdown>
+                    ## Git Commands
+
+                    ![Git Commands](media/git-commands-xkcd.png)
+                </section>
+                <section data-markdown>
+                    This is a __partial__ list of common Git Commands.
+
+                    | Task | Command | Notes |
+                    |------------|---------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+                    | Initialize | git init | Create a repository |
+                    | Clone | git clone username@host:/path/to/repository | Clones the repository from a remote server |
+                    | Stage/Add | git add <filename> | Stages files to the Index |
+
+                </section>
+                <section data-markdown>
+                        | Task | Command | Notes |
+                        |------------|---------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+                        | Commit | git commit -m "Commit message"  |  Commits changes to HEAD/Git Directory/Local Repository  |
+                        |  | gitcommit -a -m "Commit Message | -a indicates that unstaged files should be committed as well |
+                        | Push | git push origin <branch> | Pushes any committed changes to origin |
+                        | Status | git status | Lists Modified (uncommitted) files and whether or not they have been Staged |
+                </section>
+                <section data-markdown>
+                        | Task | Command | Notes |
+                        |------------|---------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+                        | Status | git status | Lists Modified (uncommitted) files and whether or not they have been Staged |
+                        | Branches | git checkout -b <branch name> | Create a new branch and switch to it |
+                        |  | git checkout <branch name> | Switch to an existing branch |
+                        |  | git branch -d <branch name> | Delete a branch |
+
+                </section>
+                <section data-markdown>
+                        | Task | Command | Notes |
+                        |------------|---------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+                        | Fetch | git fetch | Fetches any changes from origin, including on remote branches, but does not apply them to your working directory |
+                        | Pull | git pull | Fetch and merge changes from origin to your working directory |
+                        | Merge | git merge <branch name> | Merge a different branch into your current branch |
+                        | Rebase | git rebase <branch name> | Rebase a different branch onto your current branch |
+                </section>
+                <section data-markdown>
+                        | Task | Command | Notes |
+                        |------------|---------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+                        | Diff | git diff | View all merge conflicts |
+                        | Tag | git tag <tag name> | Create a new tag with the specified name |
+                </section>
+            </section>
+                <section data-markdown>
+                    ## TortoiseGit
+
+                    [TortoiseGit](https://tortoisegit.org/) is a Windows Shell GUI that plugs into Git. It provides graphical support for completing most Git functions without having to dive into the command line.
+
+                    Once it is installed, you simply right click on the repository folder and choose the command(s) you want from the TortoiseGit menu.
+                </section>
+                <section data-markdown>
+                    ## Further Reading
+
+                    * https://git-scm.com/book/en
+                    * https://stackoverflow.com/a/7076569/2530111
+                    * https://tortoisegit.org/docs/tortoisegit/
+                </section>
 		</div>
+	</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
 
-		<script>
-			// More info https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				history: true,
+	<script>
+		// More info https://github.com/hakimel/reveal.js#configuration
+		Reveal.initialize({
+			history: true,
 
-				// More info https://github.com/hakimel/reveal.js#dependencies
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+			// More info https://github.com/hakimel/reveal.js#dependencies
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+			]
+		});
+	</script>
+</body>
+
 </html>
